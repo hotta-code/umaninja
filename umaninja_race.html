@@ -7,67 +7,85 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --bg:#0b0f14;
-  --panel: rgba(18,22,32,.50);
+  --panel: rgba(18,22,32,.42);
   --line: rgba(255,255,255,.16);
   --text: rgba(255,255,255,.95);
-  --muted: rgba(255,255,255,.66);
+  --muted: rgba(255,255,255,.70);
   --accent:#ff3b3b;
   --good:#4cff9a;
   --shadow: rgba(0,0,0,.45);
-
-  --paper:#f7f2e8;
-  --ink:#111;
-  --paperLine:#000;
-  --paperTint:#eee4d1;
 }
 
 *{ box-sizing:border-box; }
+html,body{ height:100%; }
 body{
   margin:0;
-  min-height:100vh;
   color:var(--text);
-  font-family:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic UI",system-ui,sans-serif;
+  font-family:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Yu Gothic UI",system-ui,sans-serif;
   background:
     radial-gradient(1200px 700px at 40% 20%, rgba(255,255,255,.06), transparent 60%),
-    linear-gradient(rgba(0,0,0,.22), rgba(0,0,0,.60)),
+    linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.55)),
     url("race_bg.jpg") center/cover no-repeat fixed,
     var(--bg);
 }
 
-.wrap{ max-width: 1100px; margin:0 auto; padding: 12px 12px 18px; }
+.wrap{
+  max-width: 1100px;
+  margin:0 auto;
+  padding: 10px 10px 14px;
+  min-height: 100dvh;
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
 
-/* === Header === */
 .header{
-  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
   background: var(--panel);
   border:1px solid var(--line);
   border-radius: 18px;
-  padding: 10px 12px;
+  padding: 10px 10px;
   backdrop-filter: blur(10px);
   box-shadow: 0 10px 28px var(--shadow);
 }
-.brand{ display:flex; align-items:center; gap:10px; min-width: 260px; }
+
+.topRow{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+}
+
+.brand{
+  display:flex; align-items:center; gap:10px;
+  min-width: 220px;
+}
 .brand .dot{
   width:12px; height:12px; border-radius:999px;
   background: var(--good);
   box-shadow: 0 0 14px rgba(76,255,154,.75);
 }
 .brandTitle{ display:flex; flex-direction:column; gap:2px; }
-.brandTitle .t{ font-weight: 900; letter-spacing:.06em; font-size: 14px; line-height:1.2; }
+.brandTitle .t{
+  font-weight: 900;
+  letter-spacing:.06em;
+  font-size: 15px;
+  line-height:1.2;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
+}
 .brandTitle .s{
   font-size: 11px; color: var(--muted);
-  font-family:"Nunito","Zen Maru Gothic",system-ui,sans-serif;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
   letter-spacing:.03em;
 }
-.controls{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+
+.controls{
+  display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+}
 
 button{
-  border-radius: 16px;
+  border-radius: 18px;
   border: 1px solid var(--line);
   background: rgba(255,255,255,.10);
   color: var(--text);
@@ -77,7 +95,7 @@ button{
   letter-spacing:.04em;
   cursor:pointer;
   transition: transform .06s ease, background .15s ease;
-  font-family:"Zen Maru Gothic",system-ui,sans-serif;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
 }
 button:hover{ background: rgba(255,255,255,.14); }
 button:active{ transform: translateY(1px); }
@@ -89,29 +107,16 @@ button.primary:hover{ background: rgba(255,59,59,.30); }
 button[disabled]{ opacity:.55; cursor:not-allowed; }
 
 .hud{
-  display:flex; gap:14px; flex-wrap:wrap; align-items:center;
-  margin-top: 8px; padding: 0 2px;
-  color: var(--muted); font-size: 12px;
+  display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+  margin-top: 8px;
+  padding: 0 2px;
+  color: var(--muted);
+  font-size: 12px;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
 }
-.hud strong{ color: var(--text); font-family:"Nunito","Zen Maru Gothic",system-ui,sans-serif; font-weight: 900; }
+.hud strong{ color: var(--text); font-weight: 900; }
 .timer strong{ color: var(--accent); font-size: 14px; }
 
-/* === Main === */
-.main{ margin-top: 12px; display:grid; grid-template-columns: 1fr; gap: 12px; }
-
-.track{
-  background: var(--panel);
-  border:1px solid var(--line);
-  border-radius: 20px;
-  padding: 12px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 28px var(--shadow);
-}
-.trackHead{
-  display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap;
-  margin-bottom: 10px;
-}
-.trackHead .ttl{ font-weight: 900; letter-spacing:.06em; font-size: 15px; }
 .pill{
   border:1px solid rgba(255,255,255,.14);
   background: rgba(0,0,0,.18);
@@ -119,25 +124,52 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   border-radius: 999px;
   font-weight: 900;
   font-size: 12px;
-  font-family:"Nunito","Zen Maru Gothic",system-ui,sans-serif;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
 }
 
+/* Track */
+.track{
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--panel);
+  border:1px solid var(--line);
+  border-radius: 20px;
+  padding: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 28px var(--shadow);
+  display:flex;
+  flex-direction:column;
+}
+.trackHead{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  margin-bottom: 8px;
+}
+.trackHead .ttl{
+  font-weight: 900;
+  letter-spacing:.06em;
+  font-size: 15px;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
+}
+
+/* lanes: internal scroll */
 .lanes{
-  background: rgba(0,0,0,.14);
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(0,0,0,.12);
   border: 1px solid rgba(255,255,255,.10);
   border-radius: 16px;
   padding: 8px;
-  overflow:hidden;
 }
 
-/* 詰めたレーン */
 .lane{
   display:grid;
-  grid-template-columns: 190px 1fr 86px;
+  grid-template-columns: 180px 1fr;
   gap: 10px;
   align-items:center;
-  padding: 3px 8px;
-  margin: 3px 0;
+  padding: 2px 8px;
+  margin: 2px 0;
   border-radius: 14px;
   background: rgba(255,255,255,.03);
   border: 1px solid rgba(255,255,255,.07);
@@ -147,26 +179,28 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
 
 .bib{
   display:grid;
-  grid-template-columns: 54px 1fr;
+  grid-template-columns: 52px 1fr;
   column-gap: 10px;
   align-items:center;
 }
 .bib .no{
-  width: 54px; height: 36px;
+  width: 52px; height: 34px;
   border-radius: 14px;
   display:grid; place-items:center;
   border:1px solid rgba(255,255,255,.18);
   background: rgba(0,0,0,.20);
-  font-family:"Nunito","Zen Maru Gothic",system-ui,sans-serif;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
   font-weight:900;
 }
 .bib .nm{
   font-size: 13px;
-  color: rgba(255,255,255,.88);
+  color: rgba(255,255,255,.92);
   white-space: nowrap;
   overflow: visible;
   text-overflow: clip;
   letter-spacing: .02em;
+  font-family:"M PLUS Rounded 1c",system-ui,sans-serif;
+  font-weight: 700;
 }
 
 .rail{
@@ -212,11 +246,11 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   transform: translateY(-50%);
   border-radius: 999px;
   animation: streak var(--runDur) linear infinite;
-  opacity:.25;
+  opacity:.22;
 }
 @keyframes streak{
-  from{ transform: translate(-6px,-50%); opacity:.12; }
-  to  { transform: translate(2px,-50%); opacity:.30; }
+  from{ transform: translate(-6px,-50%); opacity:.10; }
+  to  { transform: translate(2px,-50%); opacity:.28; }
 }
 
 .horseImg{
@@ -249,106 +283,65 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   100% { transform: scaleX(1.02) rotate(-2deg); }
 }
 
-.pct{
-  text-align:right;
-  font-family:"Nunito","Zen Maru Gothic",system-ui,sans-serif;
-  font-weight: 900;
-  color: rgba(255,255,255,.80);
-}
-.pct .up{ color: var(--good); }
-.pct .dn{ color: rgba(255,255,255,.55); }
-
-/* === Newspaper Result (競馬新聞風に寄せる) === */
-.paperWrap{
+/* Results panel */
+.resultWrap{
   display:none;
+  background: var(--panel);
+  border:1px solid rgba(255,255,255,.18);
   border-radius: 18px;
-  overflow:hidden;
-  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  padding: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 28px var(--shadow);
 }
-.paperWrap.show{ display:block; }
-
-.paperHead{
-  background: #000;
-  color:#fff;
-  padding: 10px 12px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-  font-family: ui-monospace, Menlo, Consolas, "SF Mono", monospace;
+.resultWrap.show{ display:block; }
+.resultHead{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  margin-bottom: 8px;
 }
-.paperHead .kakutei{
-  border:2px solid #fff;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-weight: 900;
-  letter-spacing:.12em;
-}
-.paperBody{
-  background: var(--paper);
-  color: var(--ink);
-  padding: 12px;
-  border: 3px solid var(--paperLine);
-  border-top: none;
-}
-
-/* ★新聞の「見出し帯」っぽく */
-.paperTitle{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom: 10px;
-  padding: 8px 10px;
-  border: 3px solid var(--paperLine);
-  background: #fff;
-  font-family:"Zen Maru Gothic",system-ui,sans-serif;
-}
-.paperTitle .ttl{
-  font-weight: 900;
-  font-size: 18px;
+.resultHead .ttl{
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
+  font-weight:900;
   letter-spacing:.06em;
+  font-size: 16px;
 }
-.paperTitle .meta{
-  font-family: ui-monospace, Menlo, Consolas, "SF Mono", monospace;
-  font-size: 12px;
-  opacity:.85;
+.resultList{ display:flex; flex-direction:column; gap:6px; }
+.resultItem{
+  display:grid;
+  grid-template-columns: 64px 56px 1fr 92px;
+  gap: 8px;
+  align-items:center;
+  padding: 8px 10px;
+  border-radius: 16px;
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.10);
 }
-
-/* ★枠・罫線を強めて新聞ぽく */
-.paperTable{
-  width:100%;
-  border-collapse: collapse;
-  font-family: "Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
-  font-size: 13px;
-  table-layout: fixed;
-}
-.paperTable th, .paperTable td{
-  border: 2px solid var(--paperLine);
-  padding: 7px 6px;
-  text-align:center;
-}
-.paperTable th{
-  background: var(--paperTint);
+.badge{
+  display:grid; place-items:center;
+  height: 34px;
+  border-radius: 12px;
   font-weight: 900;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
+  background: rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.16);
 }
-.paperTable td.name{
-  text-align:left;
-  font-weight: 800;
-  white-space: nowrap;
-  overflow:hidden;
-  text-overflow: ellipsis;
-}
-.paperTable tr.first{
-  background:#000;
-  color:#fff;
-}
-
-/* ★競馬新聞っぽい「印」欄 */
-.paperTable td.mark{
+.badge.rank1{ background: rgba(255,215,0,.18); border-color: rgba(255,215,0,.35); }
+.badge.rank2{ background: rgba(192,192,192,.16); border-color: rgba(192,192,192,.32); }
+.badge.rank3{ background: rgba(205,127,50,.16); border-color: rgba(205,127,50,.32); }
+.miniNo{
+  display:grid; place-items:center;
+  height: 34px;
+  border-radius: 12px;
   font-weight: 900;
-  font-family: ui-monospace, Menlo, Consolas, "SF Mono", monospace;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
+  background: rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.14);
+}
+.rname{ font-weight: 900; letter-spacing:.02em; }
+.rtime{
+  text-align:right;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
+  font-weight: 900;
+  color: rgba(255,255,255,.88);
 }
 
 /* overlay */
@@ -367,7 +360,7 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   to{ opacity:0; }
 }
 .donText{
-  font-family:"Zen Maru Gothic",system-ui,sans-serif;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
   font-weight: 900;
   letter-spacing:.06em;
   font-size: clamp(44px, 8.5vw, 92px);
@@ -381,9 +374,7 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   55%{ transform: scale(1.18) rotate(2deg); }
   100%{ transform: scale(1.0) rotate(0deg); }
 }
-.finishBounce{
-  animation: finishBounce .45s cubic-bezier(.2,1.3,.2,1) 1;
-}
+.finishBounce{ animation: finishBounce .45s cubic-bezier(.2,1.3,.2,1) 1; }
 @keyframes finishBounce{
   0%{ transform: translate(var(--tx,0px), var(--ty, -50%)) scale(1); }
   55%{ transform: translate(var(--tx,0px), calc(var(--ty,-50%) - 6px)) scale(1.10); }
@@ -414,14 +405,18 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   z-index: 60;
   backdrop-filter: blur(12px);
   overflow:auto;
+  font-family:"M PLUS Rounded 1c",system-ui,sans-serif;
 }
 .drawer.show{ transform: translateX(0); }
-
 .drawerHead{
   display:flex; align-items:center; justify-content:space-between; gap:10px;
   margin-bottom: 10px;
 }
-.drawerHead .ttl{ font-weight: 900; letter-spacing:.06em; }
+.drawerHead .ttl{
+  font-weight: 900;
+  letter-spacing:.06em;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
+}
 .row{
   display:grid;
   grid-template-columns: 1fr 120px;
@@ -437,10 +432,15 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   padding: 10px 10px;
   min-height: 40px;
   outline:none;
-  font-family:"Zen Maru Gothic",system-ui,sans-serif;
   width:100%;
+  font-family:"M PLUS Rounded 1c",system-ui,sans-serif;
+  font-weight: 700;
 }
-.label{ font-size: 11px; color:var(--muted); }
+.label{
+  font-size: 11px;
+  color:var(--muted);
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
+}
 .smallBtn{ padding: 9px 10px; min-height: 40px; }
 .names{ margin-top: 12px; display:grid; grid-template-columns: 1fr; gap: 8px; }
 .nameRow{ display:grid; grid-template-columns: 46px 1fr; gap: 10px; align-items:center; }
@@ -451,7 +451,14 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   border: 1px solid rgba(255,255,255,.18);
   background: rgba(0,0,0,.20);
   font-weight: 900;
-  font-family:"Nunito","Zen Maru Gothic",system-ui,sans-serif;
+  font-family:"Baloo 2","M PLUS Rounded 1c",system-ui,sans-serif;
+}
+
+/* Mobile tweaks */
+@media (max-width: 560px){
+  .controls button{ padding: 10px 10px; }
+  .lane{ grid-template-columns: 168px 1fr; }
+  .resultItem{ grid-template-columns: 58px 52px 1fr 84px; }
 }
 </style>
 </head>
@@ -460,64 +467,47 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
 <div class="wrap">
 
   <div class="header">
-    <div class="brand">
-      <div class="dot"></div>
-      <div class="brandTitle">
-        <div class="t" id="titleView">RACE SPRINT</div>
-        <div class="s" id="subline">—</div>
+    <div class="topRow">
+      <div class="brand">
+        <div class="dot"></div>
+        <div class="brandTitle">
+          <div class="t" id="titleView">RACE SPRINT</div>
+          <div class="s" id="subline">—</div>
+        </div>
       </div>
-    </div>
 
-    <div class="controls">
-      <button class="primary" id="startBtn">START</button>
-      <button id="reseedBtn">抽選</button>
-      <button id="resetBtn">RESET</button>
-      <button id="settingsBtn">設定</button>
+      <div class="controls">
+        <button class="primary" id="startBtn">START</button>
+        <button id="reseedBtn">抽選</button>
+        <button id="resetBtn">RESET</button>
+        <button id="settingsBtn">設定</button>
+      </div>
     </div>
 
     <div class="hud">
       <div class="timer">残り：<strong id="remain">15.0</strong>s</div>
       <div>先頭：<strong id="leader">—</strong></div>
+      <div class="pill"><span id="fieldLabel">10</span>頭 / <span id="durLabel">15</span>s</div>
       <div><strong id="statusPill">待機</strong></div>
     </div>
   </div>
 
-  <div class="main">
-    <div class="track">
-      <div class="trackHead">
-        <div class="ttl">レース</div>
-        <div class="pill"><span id="fieldLabel">10</span>頭 / <span id="durLabel">15</span>s</div>
-      </div>
-      <div class="lanes" id="lanes"></div>
+  <div class="track">
+    <div class="trackHead">
+      <div class="ttl">レース</div>
     </div>
-
-    <div class="paperWrap" id="paperWrap">
-      <div class="paperHead">
-        <div>着順確定</div>
-        <div class="kakutei">確定</div>
-      </div>
-      <div class="paperBody">
-        <div class="paperTitle">
-          <div class="ttl" id="paperTitle">—</div>
-          <div class="meta" id="paperMeta">—</div>
-        </div>
-
-        <table class="paperTable">
-          <thead>
-            <tr>
-              <th style="width:56px;">着</th>
-              <th style="width:56px;">馬番</th>
-              <th style="width:64px;">印</th>
-              <th>馬名</th>
-              <th style="width:92px;">時計</th>
-              <th style="width:84px;">着差</th>
-            </tr>
-          </thead>
-          <tbody id="rankBody"></tbody>
-        </table>
-      </div>
-    </div>
+    <div class="lanes" id="lanes"></div>
   </div>
+
+  <div class="resultWrap" id="resultWrap">
+    <div class="resultHead">
+      <div class="ttl">着順確定！</div>
+      <!-- ★日時・時間は表示しない：頭数/秒数だけ -->
+      <div class="pill" id="resultMeta"></div>
+    </div>
+    <div class="resultList" id="resultList"></div>
+  </div>
+
 </div>
 
 <div class="overlayDon" id="overlayDon"><div class="donText">結果発表！</div></div>
@@ -566,7 +556,7 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
 (() => {
   const $ = (id) => document.getElementById(id);
 
-  const STORE_KEY = "race_same_icon_folder_showcase_v5";
+  const STORE_KEY = "race_showcase_clean_mobile_v2";
   const ICON_FILE = "horse_icon.png";
   const MIN_N = 5, MAX_N = 10;
   const FPS = 60;
@@ -597,12 +587,7 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
     }catch(e){ return null; }
   }
   function saveStore(){
-    const data = {
-      n: N,
-      dur: RACE_SECONDS,
-      title: $("titleInput").value || "",
-      names: getNames()
-    };
+    const data = { n:N, dur:RACE_SECONDS, title:$("titleInput").value || "", names:getNames() };
     try{ localStorage.setItem(STORE_KEY, JSON.stringify(data)); }catch(e){}
   }
 
@@ -615,10 +600,8 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   function setTitleUI(v){
     const title = (v && v.trim()) ? v.trim() : "RACE SPRINT";
     $("titleView").textContent = title;
-    $("paperTitle").textContent = title;
     document.title = title;
   }
-
   function setSubline(){
     $("subline").textContent = `${N}頭 / ${RACE_SECONDS.toFixed(0)}s`;
     $("fieldLabel").textContent = String(N);
@@ -680,7 +663,6 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
           <div class="finish"></div>
           <div class="runner">${runnerInner()}</div>
         </div>
-        <div class="pct"><span class="tmono">0%</span></div>
       `;
       lanes.appendChild(lane);
 
@@ -688,7 +670,6 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
         nameEl: lane.querySelector(".bib .nm"),
         railEl: lane.querySelector(".rail"),
         runnerEl: lane.querySelector(".runner"),
-        pctEl: lane.querySelector(".pct .tmono"),
         series: null,
         lastX: 0,
         finishFrame: STEPS,
@@ -838,10 +819,6 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
       const runDur = clamp(0.22 - spd*0.065, 0.10, 0.22);
       r.runnerEl.style.setProperty("--runDur", runDur.toFixed(3) + "s");
 
-      const pct = Math.round(x*100);
-      const arrow = dx > 0.002 ? `<span class="up">▲</span>` : (dx < -0.002 ? `<span class="dn">▼</span>` : "");
-      r.pctEl.innerHTML = `${pct}% ${arrow}`;
-
       if (x > bestX){ bestX = x; bestI = i; }
     }
 
@@ -863,57 +840,43 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
     setTimeout(()=>ov.classList.remove("show"), 700);
   }
 
-  // ★競馬新聞っぽい「印」を自動付与（上位ほど◎○▲△…）
-  function markForRank(rank){
-    const marks = ["◎","○","▲","△","☆","注","穴","消","－","－"];
-    return marks[Math.min(rank, marks.length-1)];
-  }
-
-  function buildRankingNewspaper(){
+  function buildResultPanel(){
     const names = getNames();
-
-    const arr = [...Array(N).keys()].map(i => ({
-      i,
-      t: runners[i].finishTimeSec ?? (RACE_SECONDS + 999)
-    }));
+    const arr = [...Array(N).keys()].map(i => ({ i, t: runners[i].finishTimeSec ?? (RACE_SECONDS + 999) }));
     arr.sort((a,b) => (a.t - b.t) || (a.i - b.i));
 
-    const body = $("rankBody");
-    body.innerHTML = "";
+    // ★日時は一切出さない：頭数/秒数だけ
+    $("resultMeta").textContent = `${N}頭 / ${RACE_SECONDS.toFixed(0)}秒`;
 
-    const baseT = arr[0].t;
-    for (let rank=0; rank<arr.length; rank++){
+    const list = $("resultList");
+    list.innerHTML = "";
+
+    for(let rank=0; rank<arr.length; rank++){
       const i = arr[rank].i;
       const t = arr[rank].t;
 
-      const timeStr = t.toFixed(2) + "s";
-      const gap = (rank === 0) ? "—" : (t - baseT).toFixed(2);
+      const item = document.createElement("div");
+      item.className = "resultItem";
 
-      const tr = document.createElement("tr");
-      tr.className = (rank===0) ? "first" : "";
-      tr.innerHTML = `
-        <td>${rank+1}</td>
-        <td>${i+1}</td>
-        <td class="mark">${markForRank(rank)}</td>
-        <td class="name">${escapeHtml(names[i])}</td>
-        <td>${timeStr}</td>
-        <td>${gap}</td>
+      const badgeCls = (rank===0) ? "badge rank1" : (rank===1 ? "badge rank2" : (rank===2 ? "badge rank3" : "badge"));
+      item.innerHTML = `
+        <div class="${badgeCls}">${rank+1}着</div>
+        <div class="miniNo">#${i+1}</div>
+        <div class="rname">${escapeHtml(names[i])}</div>
+        <div class="rtime">${t.toFixed(2)}s</div>
       `;
-      body.appendChild(tr);
+      list.appendChild(item);
     }
 
-    /* ★日付・時間は入れない（ここを空にする） */
-    $("paperMeta").textContent = `${N}頭 / ${RACE_SECONDS.toFixed(0)}秒`;
-
-    $("paperWrap").classList.add("show");
-    $("paperWrap").scrollIntoView({behavior:"smooth", block:"start"});
+    $("resultWrap").classList.add("show");
+    $("resultWrap").scrollIntoView({behavior:"smooth", block:"start"});
     return arr[0].i;
   }
 
   function startRace(){
     if (running) return;
 
-    $("paperWrap").classList.remove("show");
+    $("resultWrap").classList.remove("show");
 
     buildLanes();
     generateRaceSeries();
@@ -956,7 +919,7 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
     updateUIAt(STEPS, RACE_SECONDS);
 
     showResultOverlay();
-    const winner = buildRankingNewspaper();
+    const winner = buildResultPanel();
 
     const names = getNames();
     setStatus(`確定：#${winner+1} ${names[winner]}`);
@@ -965,7 +928,7 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   function reseed(){
     if (running) return;
     buildLanes();
-    $("paperWrap").classList.remove("show");
+    $("resultWrap").classList.remove("show");
     $("leader").textContent = "—";
     $("remain").textContent = RACE_SECONDS.toFixed(1);
     setStatus("待機");
@@ -974,7 +937,7 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   function resetAll(){
     if (running) return;
     buildLanes();
-    $("paperWrap").classList.remove("show");
+    $("resultWrap").classList.remove("show");
     $("leader").textContent = "—";
     $("remain").textContent = RACE_SECONDS.toFixed(1);
     setStatus("待機");
@@ -1057,3 +1020,4 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
 </script>
 </body>
 </html>
+
