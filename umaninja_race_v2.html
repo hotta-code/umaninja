@@ -554,6 +554,32 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   margin-top: 8px;
 }
 
+/* ===== 砂煙（スタート直後の演出）===== */
+.dust{
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  width: 36px; height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 70%,
+    rgba(220,200,160,.85),
+    rgba(200,180,140,.55) 40%,
+    rgba(180,160,120,.0) 75%);
+  filter: blur(1px);
+  pointer-events: none;
+  transform: scale(0.2);
+  opacity: 0;
+  animation: dustPuff 0.95s ease-out forwards;
+}
+.dust.d2{ left: 18px; bottom: 0; width: 28px; height: 20px; animation-delay: .06s; }
+.dust.d3{ left: -2px; bottom: 0; width: 32px; height: 18px; animation-delay: .12s; }
+@keyframes dustPuff{
+  0%   { transform: scale(0.2) translate(0px, 0px); opacity: 0; }
+  20%  { transform: scale(0.9) translate(-3px, -2px); opacity: .85; }
+  60%  { transform: scale(1.5) translate(-10px, -4px); opacity: .55; }
+  100% { transform: scale(2.0) translate(-20px, -2px); opacity: 0; }
+}
+
 /* ===== 追加：落馬（見た目だけ） ===== */
 .runner.fallen{
   filter: grayscale(.25);
@@ -573,6 +599,69 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
 .runner.stopped::before{
   opacity: .08;
   animation-duration: .34s;
+}
+
+/* ===== レース中UI：先頭表示だけ残してヘッダーを隠す ===== */
+body.racing .topRow{ display: none; }            /* 馬忍者CUPロゴ＋ボタン群を非表示 */
+body.racing .hud > div{ display: none; }         /* HUDの全項目を一旦非表示 */
+body.racing .hud > .leaderItem{                  /* 先頭表示だけ残す */
+  display: block;
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+}
+body.racing .hud > .leaderItem strong{
+  color: #ffd24a;
+  font-size: 16px;
+  margin-left: 4px;
+}
+body.racing .header{
+  padding: 6px 10px;
+}
+body.racing .hud{
+  margin-top: 0;
+  justify-content: center;
+}
+
+/* ===== 9:16 録画モード（PCで動画録画用）=====
+   bodyに .verticalMode が付くと、ステージを9:16比に切り替え、
+   全頭がスクロールせずに一度に表示されるよう調整 */
+body.verticalMode .stage{
+  /* 9:16の縦長矩形を画面内に収める */
+  width: min(calc((100dvh - 16px) * 9 / 16), calc(100vw - 12px), 540px);
+  aspect-ratio: 9 / 16;
+  max-width: 100vw;
+  height: auto;
+}
+body.verticalMode .lanes{
+  overflow: hidden;              /* スクロール禁止 */
+  padding: 4px;
+}
+body.verticalMode .lane{
+  margin: 1px 0;
+  padding: 0 6px;
+  grid-template-columns: 42px 1fr 88px;
+  gap: 6px;
+}
+body.verticalMode .bib .no{
+  width: 40px; height: 28px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+/* 9:16モード用：少し大きめの固定サイズ
+   1レーン ≒ 50+2(margin)+2(border) = 54px → 10レーンで540px */
+body.verticalMode .rail{ height: 50px; }
+body.verticalMode .runner{ width: 78px; height: 50px; transform-origin: center; }
+body.verticalMode .horseImg{ width: 78px; height: 50px; transform-origin: center; }
+body.verticalMode .horseImg img{ transform-origin: center; }
+body.verticalMode .namePill{
+  font-size: 11px;
+  padding: 4px 8px;
+}
+body.verticalMode #verticalBtn{
+  background: rgba(76,255,154,.22);
+  border-color: rgba(76,255,154,.45);
 }
 
 /* ===== スマホ対応：縦長フル画面で表示 ===== */
@@ -602,29 +691,33 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   .hud{ gap: 8px; font-size: 11px; }
   .hud .pill{ padding: 4px 8px; font-size: 11px; }
 
-  /* レーン：右端の名前欄は隠して、レール幅をフル活用
-     名前は番号と一緒にレールの中央に薄く表示 */
+  /* ★レーンエリア：固定サイズで10頭が確実に収まるように */
+  .lanes{
+    overflow: hidden;             /* スクロール禁止 */
+    padding: 3px;
+  }
   .lane{
-    grid-template-columns: 44px 1fr;
-    gap: 6px;
-    padding: 1px 6px;
     margin: 1px 0;
+    padding: 0 4px;
+    grid-template-columns: 34px 1fr;
+    gap: 4px;
   }
   .nameCell{ display: none; }
 
-  /* 番号枠：小さめに */
+  /* 番号枠 */
   .bib .no{
-    width: 38px; height: 28px;
-    font-size: 13px;
-    border-radius: 10px;
+    width: 32px; height: 26px;
+    font-size: 12px;
+    border-radius: 8px;
   }
 
-  /* 馬・レール：レーン数(最大10)が縦に収まるように小さめに */
-  .rail{ height: 50px; }
-  .runner{ width: 70px; height: 46px; }
-  .horseImg{ width: 70px; height: 46px; transform-origin: 18px 28px; }
-  .horseImg img{ transform-origin: 22px 30px; }
-  .finish{ width: 7px; right: 8px; }
+  /* 馬・レール：iPhone SE(縦568px)でも10頭収まる固定サイズ
+     1レーン ≒ 36+2(margin)+2(border) = 40px → 10レーンで400px */
+  .rail{ height: 36px; }
+  .runner{ width: 56px; height: 36px; transform-origin: center; }
+  .horseImg{ width: 56px; height: 36px; transform-origin: center; }
+  .horseImg img{ transform-origin: center; }
+  .finish{ width: 6px; right: 8px; }
   .afterFinishPad{ right: -36px; width: 36px; }
 
   /* 設定ドロワー：画面いっぱいに */
@@ -653,11 +746,11 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
 @media (max-width: 380px){
   .controls button{ padding: 7px 8px; font-size: 11px; min-height: 34px; }
   .hud{ font-size: 10px; }
-  .lane{ grid-template-columns: 40px 1fr; gap: 5px; }
-  .bib .no{ width: 34px; height: 26px; font-size: 12px; }
-  .rail{ height: 44px; }
-  .runner{ width: 60px; height: 40px; }
-  .horseImg{ width: 60px; height: 40px; }
+  .lane{ grid-template-columns: 30px 1fr; gap: 4px; margin: 0; }
+  .bib .no{ width: 28px; height: 24px; font-size: 11px; }
+  .rail{ height: 30px; }
+  .runner{ width: 46px; height: 30px; }
+  .horseImg{ width: 46px; height: 30px; }
 }
 </style>
 </head>
@@ -681,13 +774,14 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
             <button id="reseedBtn">抽選</button>
             <button id="resetBtn">RESET</button>
             <button id="muteBtn" title="サウンドON/OFF">🔊</button>
+            <button id="verticalBtn" title="9:16 録画モード切替">📱9:16</button>
             <button id="settingsBtn">設定</button>
           </div>
         </div>
 
         <div class="hud">
           <div class="timer">残り：<strong id="remain">15.0</strong>s</div>
-          <div>先頭：<strong id="leader">—</strong></div>
+          <div class="leaderItem">先頭：<strong id="leader">—</strong></div>
           <div class="pill"><span id="fieldLabel">10</span>頭 / <span id="durLabel">15</span>s</div>
           <div><strong id="statusPill">待機</strong></div>
         </div>
@@ -1176,6 +1270,16 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
     const minEnd = RACE_SECONDS * 0.94;
     for(let i=0;i<N;i++) finishTimes.push(minEnd + Math.random()*(RACE_SECONDS-minEnd));
     finishTimes.sort((a,b)=>a-b);
+
+    /* ★競り合い演出：上位3頭のゴールタイムを、勝者ゴール時刻の前後
+       わずかな範囲（最大0.20秒）に詰めて常に接戦にする */
+    if (N >= 3){
+      const winnerT = finishTimes[0];
+      const gap1 = 0.04 + Math.random() * 0.08; // 1着→2着：0.04〜0.12秒
+      const gap2 = 0.05 + Math.random() * 0.10; // 2着→3着：0.05〜0.15秒
+      finishTimes[1] = Math.min(winnerT + gap1, RACE_SECONDS - 0.01);
+      finishTimes[2] = Math.min(winnerT + gap1 + gap2, RACE_SECONDS - 0.01);
+    }
     finishTimes[finishTimes.length-1] = RACE_SECONDS;
 
     const perm = [...Array(N).keys()].sort(()=>Math.random()-0.5);
@@ -1299,6 +1403,21 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   }
 
   function setStatus(text){ $("statusPill").textContent = text; }
+
+  /* ===== 砂煙エフェクト：各馬の足元に3つのパフを生成し、1秒で自動削除 ===== */
+  function spawnDust(){
+    for (let i = 0; i < N; i++){
+      const r = runners[i];
+      if (!r || !r.railEl) continue;
+      for (let k = 0; k < 3; k++){
+        const d = document.createElement("div");
+        d.className = "dust" + (k === 1 ? " d2" : k === 2 ? " d3" : "");
+        r.railEl.appendChild(d);
+        // 1.1秒後に削除
+        setTimeout(() => { try { d.remove(); } catch(e){} }, 1100);
+      }
+    }
+  }
 
   function stopRace(){
     running = false;
@@ -1452,7 +1571,9 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
     const fanfareDelayMs = isMuted ? 0 : Math.floor(FANFARE_LEN * 1000);
     setTimeout(() => {
       setStatus("走行中");
+      document.body.classList.add("racing"); // ★ヘッダーを隠して先頭表示だけにする
       startGallop(); // 蹄音ループ開始
+      spawnDust();   // ★砂煙エフェクト
       t0 = performance.now();
 
       const tick = (now) => {
@@ -1481,6 +1602,7 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
     stopRace();
     stopGallop(); // 蹄音停止
     playCheer(); // ★ ゴールの瞬間に歓声
+    document.body.classList.remove("racing"); // ヘッダー再表示
     $("remain").textContent = "0.0";
     updateUIAt(STEPS, RACE_SECONDS);
 
@@ -1583,6 +1705,25 @@ button[disabled]{ opacity:.55; cursor:not-allowed; }
   });
   // 起動時のミュートボタン表示
   setMuted(isMuted);
+
+  /* ===== 9:16 録画モード切替 ===== */
+  const VERTICAL_KEY = "race_x_vertical_v2";
+  function setVerticalMode(on){
+    if (on) document.body.classList.add("verticalMode");
+    else    document.body.classList.remove("verticalMode");
+    try{ localStorage.setItem(VERTICAL_KEY, on ? "1" : "0"); }catch(e){}
+  }
+  // 起動時にURLパラメータ ?vertical=1 もしくは保存値で初期化
+  let verticalInit = false;
+  try{
+    const sp = new URLSearchParams(location.search);
+    if (sp.get("vertical") === "1") verticalInit = true;
+    else if (localStorage.getItem(VERTICAL_KEY) === "1") verticalInit = true;
+  }catch(e){}
+  setVerticalMode(verticalInit);
+  $("verticalBtn").addEventListener("click", () => {
+    setVerticalMode(!document.body.classList.contains("verticalMode"));
+  });
 
   $("settingsBtn").addEventListener("click", () => openDrawer());
   $("closeDrawerBtn").addEventListener("click", () => closeDrawer());
